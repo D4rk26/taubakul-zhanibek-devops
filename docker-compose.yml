@@ -1,0 +1,21 @@
+services:
+  student-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: taubakul-zhanibek-devops:latest
+    container_name: taubakul-zhanibek-container
+    environment:
+      STUDENT_NAME: Zhanibek
+      STUDENT_SURNAME: Taubakul
+      STUDENT_GROUP: IT2-2302
+      STUDENT_ID: "37650"
+    ports:
+      - "127.0.0.1:8080:8080"
+    init: true
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
