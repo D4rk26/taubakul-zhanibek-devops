@@ -163,3 +163,17 @@ docker compose down
 Compose records the build, environment, port, health, and security configuration declaratively, so the service can be started consistently without repeating a long `docker run` command. The service binds only to `127.0.0.1`, uses a read-only root filesystem, drops Linux capabilities, and enables `no-new-privileges`.
 
 The application is stateless, and Tasks 11–15 do not require persistent application data, so no Docker volume or host bind mount is added. Compose creates and removes its project-scoped default network automatically; no custom network is required.
+
+## Jenkins CI/CD
+
+The Jenkins Pipeline Job is named `Taubakul_Zhanibek_DevOps`. Jenkins runs locally on `127.0.0.1:8081` and loads this repository's root-level `Jenkinsfile` from the private GitHub repository with a dedicated read-only deploy key.
+
+The Declarative Pipeline executes these required stages in order:
+
+1. `Checkout` retrieves the selected Git commit from GitHub and records its SHA.
+2. `Build` validates Python and Bash syntax, the Compose model, and student metadata.
+3. `Test` runs the six application unit tests and prints the required student variables.
+4. `Docker Build` creates an ARM64 image tagged with the Jenkins build number and Git SHA.
+5. `Docker Run` starts a uniquely named non-root, read-only container and verifies health, successful HTTP output, a negative HTTP response, labels, logs, and runtime security settings.
+
+The temporary CI container does not publish a host port, avoiding a conflict with Jenkins and the Compose development port. It is removed after evidence is emitted, while the traceable CI image remains available for inspection. Jenkins credentials and private deploy keys are stored outside this repository and are never passed to the application Pipeline environment.
