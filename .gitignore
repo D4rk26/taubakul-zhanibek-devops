@@ -1,0 +1,28 @@
+# macOS metadata
+.DS_Store
+
+# Laboratory runtime data required locally but excluded by Task 8
+*.log
+backup/
+
+# Environment files and local credentials
+.env
+.env.*
+!.env.example
+credentials/
+.credentials/
+*.pem
+*.key
+
+# Temporary and editor files
+*.tmp
+*.temp
+*.swp
+*~
+.idea/
+.vscode/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
