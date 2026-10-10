@@ -177,3 +177,5 @@ The Declarative Pipeline executes these required stages in order:
 5. `Docker Run` starts a uniquely named non-root, read-only container and verifies health, successful HTTP output, a negative HTTP response, labels, logs, and runtime security settings.
 
 The temporary CI container does not publish a host port, avoiding a conflict with Jenkins and the Compose development port. It is removed after evidence is emitted, while the traceable CI image remains available for inspection. Jenkins credentials and private deploy keys are stored outside this repository and are never passed to the application Pipeline environment.
+
+The complete Linux → Git → GitHub → Jenkins → Docker integration and the eight Task 21 defense questions are documented in [Integrated DevOps Workflow](docs/INTEGRATED_DEVOPS_WORKFLOW.md).
