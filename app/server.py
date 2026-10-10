@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import os
+import signal
 import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Mapping
@@ -107,6 +108,12 @@ def main() -> int:
     print(render_student_info(student), end="", flush=True)
     print(f"INFO server listening on 0.0.0.0:{port}", flush=True)
     server = ThreadingHTTPServer(("0.0.0.0", port), StudentRequestHandler)
+
+    def handle_termination(signum: int, _frame: object) -> None:
+        print(f"INFO server received signal {signum}", flush=True)
+        raise KeyboardInterrupt
+
+    signal.signal(signal.SIGTERM, handle_termination)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
