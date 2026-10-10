@@ -101,4 +101,3 @@ Process evidence uses `ps`, `ps aux`, and non-interactive `top -b -n 1`. Permiss
 - Force pushes and history rewriting are not part of this laboratory workflow.
 
 The GitHub repository for Task 10 is `https://github.com/D4rk26/taubakul-zhanibek-devops`.
-
