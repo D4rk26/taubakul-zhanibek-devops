@@ -61,7 +61,10 @@ PY
                     bash -n scripts/Taubakul_Zhanibek_system.sh
                     bash -n scripts/generate_application_log.sh
                     docker compose config --quiet
-                    test "$(sed -n '1p' Taubakul_Zhanibek_info.txt)" = 'Zhanibek Taubakul'
+                    grep -Fx 'Name: Zhanibek' Taubakul_Zhanibek_info.txt
+                    grep -Fx 'Surname: Taubakul' Taubakul_Zhanibek_info.txt
+                    grep -Fx 'Group: IT2-2302' Taubakul_Zhanibek_info.txt
+                    grep -Fx 'Student ID: 37650' Taubakul_Zhanibek_info.txt
                     printf 'Build validation completed for %s %s (%s, %s)\n' \
                         "$STUDENT_NAME" "$STUDENT_SURNAME" "$STUDENT_GROUP" "$STUDENT_ID"
                 '''
