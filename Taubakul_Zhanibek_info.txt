@@ -1,0 +1,5 @@
+Name: Zhanibek
+Surname: Taubakul
+Group: IT2-2302
+Student ID: 37650
+Course: DevOps
