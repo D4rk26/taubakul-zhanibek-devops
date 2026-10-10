@@ -47,7 +47,17 @@ docker exec --user student \
   taubakul-zhanibek-linux uname -m
 ```
 
-The expected architecture is `aarch64`. This repository does not contain a Dockerfile or Compose configuration; those belong to a later laboratory phase.
+The expected architecture is `aarch64`. The reusable Ubuntu container is used for Linux Tasks 1–5; the repository Dockerfile and Compose configuration build the separate student HTTP application used in Tasks 11–15 and Jenkins CI.
+
+## Prerequisites
+
+- Apple Silicon macOS host with Docker Desktop and the Docker CLI available;
+- Git and GitHub CLI for repository operations;
+- Python 3 for direct unit tests;
+- Ubuntu 24.04 ARM64 image for the reusable Linux laboratory container;
+- Jenkins LTS with Java 21 for CI/CD Tasks 16–20.
+
+The application itself has no third-party Python dependencies. Jenkins is deliberately kept outside the repository: its credentials, read-only GitHub deploy key, user database, and local service configuration must never be committed.
 
 ## Run the system information script
 
@@ -179,3 +189,15 @@ The Declarative Pipeline executes these required stages in order:
 The temporary CI container does not publish a host port, avoiding a conflict with Jenkins and the Compose development port. It is removed after evidence is emitted, while the traceable CI image remains available for inspection. Jenkins credentials and private deploy keys are stored outside this repository and are never passed to the application Pipeline environment.
 
 The complete Linux → Git → GitHub → Jenkins → Docker integration and the eight Task 21 defense questions are documented in [Integrated DevOps Workflow](docs/INTEGRATED_DEVOPS_WORKFLOW.md).
+
+## Quick verification and troubleshooting
+
+Run the project checks from the repository root:
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+docker compose config --quiet
+docker build -t taubakul-zhanibek-devops .
+```
+
+If Docker commands cannot reach the daemon, confirm that Docker Desktop is running and inspect `docker context show` and `docker version`. If port 8080 is busy, stop only the project container with `docker compose down`; do not remove unrelated containers. If Jenkins cannot check out the private repository, verify the repository-scoped read-only deploy key, Jenkins SSH credential, and GitHub host-key entry without printing the private key. Jenkins is expected at `http://127.0.0.1:8081` and is intentionally unavailable from other hosts.
