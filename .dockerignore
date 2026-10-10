@@ -1,0 +1,5 @@
+# Send only the files used by the Dockerfile.
+**
+!Dockerfile
+!app/
+!app/server.py
